@@ -38,24 +38,25 @@ void i2c_send(unsigned char data)
 
 int main(void)
 {
-uint8_t buffer[1024]; // 1024 байта
+/*uint8_t buffer[1024]; // 1024 байта
 for(int i = 0; i < 1024; i++) 
 	{
 		buffer[i] = 0xFF;
 		}
-	
+	*/
 	
 	
 i2c_init();
 	
 i2c_start();     
-i2c_send(0b01111000);  
-i2c_send(0x40);
-int i;    
+i2c_send(0x78);  
+i2c_send(0x00);
+i2c_send(0xA7);
+/*int i;    
 for(i = 0; i < 1024; i++) {
 	i2c_send(buffer[i]);
 	}
-		
+*/		
 i2c_stop();
 	
 	while (1) {
