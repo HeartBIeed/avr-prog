@@ -29,7 +29,7 @@ void i2c_send(unsigned char data)
 {
 	TWDR = data;// запись данных в регистр данных
 	TWCR=(1<<TWINT)|(1<<TWEN);//вкл передача
-	while(!(TWCR&(1<<TWINT))); // twint ждем в нуле
+	while(!(TWCR&(1<<TWINT))); // twint ждем в 1
 }
 
 
@@ -50,7 +50,21 @@ i2c_init();
 	
 i2c_start();     
 i2c_send(0x78);  
-i2c_send(0x00);
+
+i2c_send(0xA8);
+i2c_send(0xD3);
+i2c_send(0x40);
+i2c_send(0xA0);
+i2c_send(0xC0);
+i2c_send(0xDA);
+i2c_send(0x81);
+i2c_send(0xA4);
+i2c_send(0xA6);
+i2c_send(0xD5);
+i2c_send(0x8D);
+i2c_send(0xAF);
+
+
 i2c_send(0xA7);
 /*int i;    
 for(i = 0; i < 1024; i++) {
