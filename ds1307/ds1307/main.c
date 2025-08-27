@@ -88,23 +88,20 @@ int main()
 
 	i2c_init();
 	
-	
+/*	
 i2c_start();
 i2c_send(0b11010000); // адрес 0x68 + 0 - бит отправки
 i2c_send(0);
 i2c_send(BinDec(0));
-i2c_send(BinDec(55));
+i2c_send(BinDec(58));
 i2c_send(BinDec(21));
 i2c_stop();
-
+*/
 	
 	iniport();
 	LCD_ini();
 	setpos(0,0);
 		
-/*char time[9]={"19:31:14"};
-	sendchar(time);
-*/
 
 while(1)
 	{

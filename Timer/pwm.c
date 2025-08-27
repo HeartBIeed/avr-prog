@@ -14,35 +14,34 @@
 
 void init_PWM(void)
 {
-TCCR2 = (1<<WGM20)|(1<<WGM21); //fast pwm mode 
-TCCR2 = (1<<COM21); // non invert
-TCCR2 = (1<<CS21)|(1<<CS22); //prescaler /256 
+	
+DDRB|=(1<<3); //PB3
 
-TCNT2= 0x00; // counter to zero
-OCR2 = 0x00; // width  0 - 0 / FF -100
+TCNT0 = 0;
+TCCR0 = (1 << WGM00) | (1 << WGM01)|(1 << COM01)|(1 << CS01)|(1 << CS00); // FastPWM / предделитель
 
-TIMSK |= 0x00;	
-ASSR| =0x00;
+
+
 
 }
 
-int pwm_proc(int p) //num to procent
+int pwm_proc(int p) //Проценты в число
 {
-unsigned int result;
-result = p/100*255;
-return	result;
+	unsigned int result;
+	result = (p*255)/100;
+	return	result;
 }
 
 int main(void)
- {
-init_PWM();
-  
-PORTB=0x00;
-DDRB=0b00001000; // oc2 pin
- 
-   while(1)
- 
-   {
-	OCR2 = pwm_proc(50);
-   }
- }
+{
+	init_PWM();
+
+	
+	while (1)
+	{
+		
+		OCR0 = pwm_proc(10); //10%
+
+	}
+	
+}
