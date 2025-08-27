@@ -5,10 +5,11 @@
 
 void iniport(void)
 {
+	PORTA=0x00;
 	DDRA=0xFF;
-	PORTA=0x01;
 
 }
+
 
 
 
@@ -19,15 +20,14 @@ int main(void)
 	LCD_ini();
 	
 	setpos(0,0);
-	char mystr1[] = "random text 1";
-	send_ptr_str(mystr1);	
-
+	char mystr[] = "Hello World!";
+	send_ptr_str(mystr); //отправка массива
 	
 	setpos(0,1);
-	char mystr2[] = "random text 2";
+	char mystr2[] = "random text";
 	send_ptr_str(mystr2);
 
-
+	
 	
 	while(1)
 	{
