@@ -1,37 +1,17 @@
-#ifndef MAIN_H_
-#define MAIN_H_
+#include "ds18b20.h"
 
-#define F_CPU 8000000UL
-
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-
-#define PORTTEMP PORTD
-#define DDRTEMP DDRD
-#define PINTTEMP PIND
-#define BITTEMP 1
-#define NOID 0xCC // пропуск ид через РОМ
-#define TCONV 0x44 // code temp 
-#define READ 0xBE // регистр  датчика
-
-
-#endif /* MAIN_H_ */	
 
 char search(void) //обнаружение датчика
 	{
 
-	char stacktemp+SREG;// сожраняем стек
+	char stacktemp= SREG;// сожраняем стек
 	cli();
 
 	char dt;
-	DDRTEMP | = BITTEMP; // DOWN
+	DDRTEMP|= BITTEMP; // DOWN
 	_delay_us(485);
 
-	DDRTEMP & = ~ (1<<BITTEMP); // UP
+	DDRTEMP&= ~ (1<<BITTEMP); // UP
 	_delay_us(65);
 
 
@@ -52,16 +32,15 @@ char search(void) //обнаружение датчика
 
 char readbit(void) // чтение бита
 	{
-	char stacktemp+SREG;// save stack
+	char stacktemp =SREG;// save stack
 	cli();
 
 	char bt;
 
-	char dt;
-	DDRTEMP | = BITTEMP; // DOWN
+	DDRTEMP|= BITTEMP; // DOWN
 	_delay_us(2);
 
-	DDRTEMP & = ~ (1<<BITTEMP); // UP
+	DDRTEMP&= ~ (1<<BITTEMP); // UP
 	_delay_us(13);
 
 	bt = (PINTTEMP&(1<<BITTEMP))>>BITTEMP;
@@ -82,12 +61,12 @@ char readbyte(void) //чтение байта
 	
 	for(i = 0;i<0;i++)
 
-			c | = readbit()<<i;
+			c|= readbit()<<i;
 			return c;
 		}
 
 
-	vois dt_sendbyte(unsigned char bt)
+void dt_sendbyte(unsigned char bt)
 	{
 
 	char i;
@@ -102,22 +81,19 @@ char readbyte(void) //чтение байта
 	}
 
 
-void sendbit(char bt) // чтение бита
+char sendbit(char bt) // чтение бита
 	{
-	char stacktemp+SREG;// save stack
+	char stacktemp=SREG;// save stack
 	cli();
 
-	char bt;
-
-	char dt;
-	DDRTEMP | = 1<<BITTEMP; // DOWN
+	DDRTEMP|= 1<<BITTEMP; // DOWN
 	_delay_us(2);
 
-	if (bt)
-		DDRTEMP & = ~ (1<<BITTEMP); // UP
+	if (bt){
+		DDRTEMP&=~(1<<BITTEMP); // UP
 		_delay_us(65);
-
-		DDRTEMP & = ~ (1<<BITTEMP); // UP
+	}
+		DDRTEMP&=~(1<<BITTEMP); // UP
 		SREG =stacktemp; //return stack
 
 	return bt;
@@ -165,7 +141,7 @@ return t;
 int main(void)
 {
 
-
+char tt;
 while(1)
 	{
 	tt = conv_temp(check());

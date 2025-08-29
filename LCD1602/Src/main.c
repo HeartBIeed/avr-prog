@@ -3,20 +3,9 @@
 
 
 
-void iniport(void)
-{
-	PORTA=0x00;
-	DDRA=0xFF;
-
-}
-
-
-
-
-
 int main(void)
 {
-	iniport();
+	iniport_LCD();
 	LCD_ini();
 	
 	setpos(0,0);
