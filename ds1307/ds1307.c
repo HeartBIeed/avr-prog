@@ -35,14 +35,14 @@ void iniport(void)
 
 
 
-unsigned char BinDec(unsigned char chin) // двоичный в десятичный
+unsigned char DecToBSD(unsigned char chin) // 
 {
 	unsigned char chout = ((chin / 10)<<4)|(chin % 10);
 	
 	return chout;
 }
 
-unsigned char DecBin(unsigned char chin) //  десятичный to bin
+unsigned char BSDtoDec(unsigned char chin) //  
 {
 	unsigned char chout = ((chin >> 4 )*10) + (0b00001111 & chin);
 	
@@ -79,9 +79,9 @@ int main()
 i2c_start(); // настройка времени
 i2c_send(0b11010000); // адрес 0x68 + 0 - бит отправки
 i2c_send(0);
-i2c_send(BinDec(0)); //секунды
-i2c_send(BinDec(58)); //минуты
-i2c_send(BinDec(21)); //часы
+i2c_send(DecToBSD(0)); //секунды
+i2c_send(DecToBSD(58)); //минуты
+i2c_send(DecToBSD(21)); //часы
 i2c_stop();
 */
 	
@@ -108,9 +108,9 @@ while(1)
 	    
 		i2c_stop();
 		
-sec = DecBin(sec);		
-min = DecBin(min);
-hour =DecBin(hour);
+sec = BSDtoDec(sec);		
+min = BSDtoDec(min);
+hour =BSDtoDec(hour);
 
 setpos(0,0);
 
