@@ -14,9 +14,9 @@
 #define DDRTEMP DDRD
 #define PINTTEMP PIND
 #define BITTEMP 1
-#define NOID 0xCC // пропуск ид через РОМ
-#define TCONV 0x44 // code temp
-#define READ 0xBE // регистр  датчика
+#define NOID 0xCC // Skip Rom
+#define TCONV 0x44 // Convert T 
+#define READ 0xBE // Read Scratchpad
 
 
 char search(void);
