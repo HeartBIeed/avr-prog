@@ -54,25 +54,21 @@ int pwm_proc(int p) //Проценты в число
 int main(void)
 {
 
-	uint16_t top = freq(4000,8);
+	uint16_t top = freq(3000,8);
 	pwm_init(top);
 
 	
 
-int i = 10;
+int i = 50;
+
+	uint16_t dt1 = pwm_proc(i);
+	set_duty(dt1,dt1);
+
 	while (1)
 	{
 		
 	
-			uint16_t dt1 = pwm_proc(i);
-			uint16_t dt2 =	pwm_proc(i);
-			set_duty(dt1,dt2);
-			_delay_ms(1000);
-			
-			i= i +10;
-		if (i>100)
-		{i = 0;
-		}
+		
 
 	}
 	
