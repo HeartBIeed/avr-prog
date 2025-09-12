@@ -1,22 +1,20 @@
 MCU     = atmega16
 F_CPU   = 8000000UL
-TARGET  = timer0
+TARGET  = dht11
 
 CC      = avr-gcc
 OBJCOPY = avr-objcopy
 
 
-
-
-
 SRC     = $(wildcard *.c)
+HEADERS = $(wildcard inc/*.h)
 OBJ     = $(SRC:.c=.o)
 
-CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os 
+CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Iinc
 
 all: $(TARGET).hex
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET).elf: $(OBJ)
@@ -25,5 +23,3 @@ $(TARGET).elf: $(OBJ)
 $(TARGET).hex: $(TARGET).elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
-clean:
-	rm -rf *.o *.elf

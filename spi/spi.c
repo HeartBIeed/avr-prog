@@ -16,17 +16,17 @@
 int main(void)
 {
 
-DDRB | = ((1<<POTRB2)|(1<<POTRB3)|(1<<POTRB5)); // spi pin out
-POTRTB & = ~ ((1<<POTRB2)|(1<<POTRB3)|(1<<POTRB5)); // in low
+DDRB |= (1<<PB2)|(1<<PB3)|(1<<PB5); // spi pin out
+PORTB &= ~((1<<PB2)|(1<<PB3)|(1<<PB5)); // in low
 
-SPCR & = ~ ((1<<SPE)|(1<<MSTR));  // enable spi / master enable / spi control registr
-DPDR = 0; // data registr
+SPCR &= ~ ((1<<SPE)|(1<<MSTR));  // enable spi / master enable / spi control registr
+SPDR = 0; // data registr
 
 
 	while(!(SPSR&(1<<SPIF))); // SR - status registr, SPIF - end transmit HIGH
 
-POTRTB ! =  (1<<POTRB2); // ss up	
-POTRTB & = ~ (1<<POTRB2);	// ss down	
+PORTB |=  (1<<PB2); // ss up	
+PORTB &= ~(1<<PB2);	// ss down	
 
 	
 }
@@ -36,8 +36,11 @@ POTRTB & = ~ (1<<POTRB2);	// ss down
 /*
 
 SPDR (SPI Data Register) — регистр данных
+
 SPCR (SPI Control Register) — управляющий регистр
+(1<<SPIE)- interrupt
+
+
 SPSR (SPI Status Register) — статусный регистр
-
-
+SPIF - complete
 */
