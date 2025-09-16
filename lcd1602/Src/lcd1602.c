@@ -91,3 +91,21 @@ void send_ptr_str(char *str) // отправка строки по указат�
 
 	    }
 }
+
+
+void create_symb(unsigned char index_symb, const unsigned *data) 
+{
+	unsigned char adress;
+	unsigned char i;
+
+	adress=0x40|(index_symb << 3); //<< 3 = умножить на 8.
+
+	send(adress, 0);
+
+for (i = 0; i < 8; i++)
+{
+	send(data[i], 1);
+}
+
+
+}

@@ -14,5 +14,6 @@ void sendbyte(unsigned char c);
 void sendchar(unsigned char c); 
 void setpos(unsigned char x, unsigned y); 
 void send_ptr_str(char *str);
+void create_symb(unsigned char index_symb, const unsigned char *data); 
 
 #endif /* LCD1602_H_ */

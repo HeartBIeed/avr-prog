@@ -9,78 +9,78 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-#define DHT_DDRD DDRD
-#define DHT_PORT PORTD
-#define DHT_PIN PIND
-#define DHT_BIT 6
-
-
+#define DHT_PIN 6
 
 #endif /* DHT11_H_ */
 
-uint8_t dht_input_mode(){DHT_DDRD &=~(1<<DHT_BIT);} //пин порта на вход
-uint8_t dht_output_mode(){DHT_DDRD |= (1<<DHT_BIT);}// на выход
-uint8_t dht_high(){DHT_PORT |= (1<<DHT_BIT);} // установит пин в 1
-uint8_t dht_low(){DHT_PORT &=~(1<<DHT_BIT);} // в ноль
+unsigned char c =0;
 
-void dht_start(void)
+void dht_request() //start down-up
 {
-dht_output_mode();
-dht_low();
-_delay_ms(20);
-dht_high()
-_delay_us(40);
+	DDRD|= (1<<DHT_PIN);
+	PORTD&=~(1<<DHT_PIN);
+	_delay_ms(20);			
+	PORTD|= (1<<DHT_PIN);
 
-dht_input_mode();
 }
 
-uint8_t dht_wait_high()
+void dht_response(void) //ответ - ждем пока датчик моргнет в ответ up-down-up
 {
+	DDRD&=~(1<<DHT_PIN);
+	while (PIND &=(1<<DHT_PIN)); // ожидание 1
+	while ((PIND &=(1<<DHT_PIN))==0); // ожидание 0
+	while (PIND &=(1<<DHT_PIN));
 
-//свыше 30 мкс  - 1
 }
 
-uint8_t dht_wait_low()
+uint8_t dht_receive_data() //получаем байт
 {
+	for (int i = 0; i < 8; i++)
+		{
 
-//до 30 мкс  - 1
-	
+		while ((PIND &=(1<<DHT_PIN))==0); // ждем появления 1. пока 0 - не выходим из цикла
+		_delay_ms(30);			
+
+				if (PIND &=(1<<DHT_PIN)) // если пин в 1 более 30 мс
+				{
+					c=(c<<1)|(0x01); // то сдвиг влево и пишем в конец 1
+				}
+				else 
+				{
+					c=(c<<1); // то сдвиг влево. в конце 0
+				}
+
+		}
+
+return c;
 }
 
-uint8_t dht_read_bit()
+void dht_write_data(char* data)
 {
+	unsigned char I_RH,D_RH,I_TEMP,D_TEMP;
+	unsigned char Temp,Humi;
 
-	
+	dht_request();
+	dht_response();
+	I_RH = dht_receive_data(); // целая часть
+	D_RH = dht_receive_data(); // дробная
+	I_TEMP = dht_receive_data();
+	D_TEMP = dht_receive_data();
+
+sprintf(data, "RH:%d.%d%% T:%d.%dC", I_RH, D_RH, I_TEMP, D_TEMP);
+
 }
 
-uint8_t dht_read_byte(void)
-{
-uint8_t data =0;
-for (int i = 0; i < 8; ++i)
-	{
-		data << = 1;
-		data | = dht_read_bit();
-	}
-	return data;
-}
+
 
 
 int main(void)
 {
 
-DDRB |= (1<<PB2)|(1<<PB3)|(1<<PB5); // spi pin out
-PORTB &= ~((1<<PB2)|(1<<PB3)|(1<<PB5)); // in low
-
-
-PORTB |=  (1<<PB2); // ss up	
-PORTB &= ~(1<<PB2);	// ss down	
-
+	char data[20];
+	dht_write_data(data);
 	
 }
 
 
 
-/*
-
-
-*/
