@@ -93,7 +93,7 @@ void send_ptr_str(char *str) // отправка строки по указат�
 }
 
 
-void create_symb(unsigned char index_symb, const unsigned *data) 
+void create_symb(unsigned char index_symb, const unsigned char *data) 
 {
 	unsigned char adress;
 	unsigned char i;

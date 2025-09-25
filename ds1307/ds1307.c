@@ -80,8 +80,8 @@ i2c_start(); // настройка времени
 i2c_send(0b11010000); // адрес 0x68 + 0 - бит отправки
 i2c_send(0);
 i2c_send(DecToBSD(0)); //секунды
-i2c_send(DecToBSD(8)); //минуты
-i2c_send(DecToBSD(16)); //часы
+i2c_send(DecToBSD(43)); //минуты
+i2c_send(DecToBSD(21)); //часы
 i2c_stop();
 
 	
