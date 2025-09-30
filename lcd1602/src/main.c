@@ -5,11 +5,11 @@
 
 int main(void)
 {
-	LCD_ini_1602();
+	LCD1602_ini();
 	
-	setpos(0,0);
+	set_lcd_pos(0,0);
 	char mystr[] = {0xCF,0xF0,0xE8,0xE2,0xE5,0xF2};
-	send_ptr_str(mystr); //отправка массива
+	send_lcd_ptr_str(mystr); //отправка массива
 	
 	/*
 	setpos(10,1);
@@ -68,10 +68,10 @@ const unsigned char a[8] = {
 
 for (uint8_t n = 0; n < 4; n++){
 	
-setpos(n,1);
-send(n,1);
+    set_lcd_pos(n,1);
+    send_byte(n,1);
 
-}
+    }
 
 //setpos(15,0);
 //send(0b11111101,1);

@@ -42,16 +42,19 @@ int pwm_proc(int p) //Проценты в число
 int main(void)
 {
 
-top = freq(20000,8);
-pwm_init();
+	top = freq(20000,8);
 
-set_duty(top/2,top/4);
+	pwm_init();
+
+	set_duty(top/2,top/4);
+
+
 
 	while (1)
 	{
-		
+			
 
 	}
-	
+		
 }
 
