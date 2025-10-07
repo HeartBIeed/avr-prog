@@ -8,9 +8,9 @@ void USART_init(uint16_t speed)
 	UBRRH =(speed>>8);	
 	UBRRL = speed;
 
-	UCSRB |= (1<<RXEN)|(1<<TXEN)|(1<<RXCIE); //RXCIE - innterr
-	UCSRA |= (1<<U2X); // 8 MGc
-	UCSRC |= (1<<URSEL)|(1<<USBS)|(1<<UCSZ1)|(1<<UCSZ0); //sel assync umsel non 2 uscz 11 - 8 bit 
+	UCSRB = (1<<RXEN)|(1<<TXEN)|(1<<RXCIE); //RXCIE - innterr
+	UCSRA = (1<<U2X); // x2 (9600 -> 103 -> 8 MHz)
+	UCSRC = (1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0); //assync /8 bit 
 	}
 
 void USART_TX(unsigned char data)
@@ -37,7 +37,18 @@ void USART_echo()
 
 	}
 
-void USART_ptr_str(char *str) // 
+void USART_ptr_str(char *str) // TX string
+	{
+		while (*str) 
+		{
+
+		USART_TX(*str++);
+		
+		}
+
+	}
+
+	void USART_get_str(char *str) // 
 	{
 		while (*str) 
 		{
@@ -59,15 +70,15 @@ int main(void)
 	USART_TX('O');
 	USART_TX('N');
 
-	unsigned char mystr[10] = {"Hello/0"};
+	unsigned char mystr[] = {"Hello"};
 	USART_ptr_str(mystr);
 
-	unsigned char str_get[6] = {"GET:/0"};
+	unsigned char str_get[] = {"GET:"};
 
     while(1)
     {
-
-		if (data_ready ==1)
+4545
+		if (data_ready)
 		{
 
 			USART_ptr_str(str_get);
