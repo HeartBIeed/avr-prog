@@ -36,8 +36,10 @@ void send_nibble(uint8_t byte) // отправка байта
 
 		E1
 		_delay_us(50);
-			
-		SNDBYTE // отправляем старшую тетраду
+
+		PORTA &= 0xF; // отчистка старшей тетрады порта
+		PORTA=byte; 
+		//SNDBYTE // отправляем старшую тетраду
 		
 		E0
 		_delay_us(50);

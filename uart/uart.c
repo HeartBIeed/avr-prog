@@ -48,7 +48,7 @@ void USART_ptr_str(char *str) // TX string
 
 	}
 
-	void USART_get_str(char *str) // 
+void USART_get_str(char *str) // 
 	{
 		while (*str) 
 		{
