@@ -4,9 +4,9 @@
 void LCD1602_ini(void)
 	{
 
-		DDRA=0xFF;
-		PORTA=0x00;
-
+		SETPORT
+		MODEPORT
+		
 			_delay_ms(15);
 		send_nibble(0x3);  // 0b00000011 включает 4 битный режим
 			_delay_ms(4);
@@ -29,44 +29,43 @@ void LCD1602_ini(void)
 
 	}
 
-void send_nibble(unsigned char c) // отправка байта
+void send_nibble(uint8_t byte) // отправка байта
 	{
 		
-		c<<=4; // сдвигаем байт младшей тетрадой к старшей
+		byte<<=4; // сдвигаем байт младшей тетрадой к старшей
 
 		E1
 		_delay_us(50);
 			
-		PORTA &= 0xF; // отчистка старшей тетрады порта
-		PORTA  |= c; // отправляем старшую тетраду
+		SNDBYTE // отправляем старшую тетраду
 		
 		E0
 		_delay_us(50);
 			
 	}
 
-void send_byte(unsigned char c,unsigned char mode)
+void send_byte(uint8_t c,uint8_t mode)
 	{
 
 		if (mode ==0) {RS0} // команда 0
 		else {RS1}// данные 1
 		
-		unsigned char hc=0;
+		uint8_t hc=0;
 		hc = c >> 4;
 
 		send_nibble(hc); // H nibble
 		send_nibble(c);	// L  nibble
 	}
 
-void send_lcd_char(unsigned char c) // отправка 1 символа
+void send_lcd_char(uint8_t c) // отправка 1 символа
 	{
 		send_byte(c,1);
 			_delay_ms(10);
 	}
 
-void set_lcd_pos(unsigned char x, unsigned y) // установка позиции Х 0-15, У 0-1.
+void set_lcd_pos(uint8_t x, uint8_t y) // установка позиции Х 0-15, У 0-1.
 	{
-		char adress;
+		uint8_t adress;
 
 		adress=(0x40*y+x)|0b10000000; // адреса символов 2ой строки идут от 40, 8й бит передает команду установки позиции
 
@@ -75,7 +74,7 @@ void set_lcd_pos(unsigned char x, unsigned y) // установка позици
 	}
 
 
-void send_lcd_ptr_str(char *str) // отправка строки по указателю массива
+void send_lcd_ptr_str(uint8_t *str) // отправка строки по указателю массива
 	{
 		while (*str) {
 
@@ -86,10 +85,10 @@ void send_lcd_ptr_str(char *str) // отправка строки по указ�
 	}
 
 
-void create_symb(unsigned char index_symb, const unsigned char *data) 
+void create_symb(uint8_t index_symb, const uint8_t *data) 
 	{
-		unsigned char adress;
-		unsigned char i;
+		uint8_t adress;
+		uint8_t i;
 
 		adress=0x40|(index_symb << 3); //<< 3 = умножить на 8.
 
@@ -101,3 +100,8 @@ void create_symb(unsigned char index_symb, const unsigned char *data)
 			}
 
 	}
+
+/*
+		PORTA &= 0xF; // отчистка старшей тетрады порта
+		PORTA  |= c; // отправляем старшую тетраду
+*/
