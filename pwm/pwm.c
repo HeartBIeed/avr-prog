@@ -2,11 +2,12 @@
 
 void init_PWM(void)
 	{
-		
 	DDRB|=(1<<3); //PB3
+
 	TCNT0 = 0;
-	TCCR0 = (1 << WGM00) | (1 << WGM01)|(1 << COM01)|(1 << CS01)|(1 << CS00); 
-	// FastPWM / предделитель
+	TCCR0 = (1 << WGM00) | (1 << WGM01)|(1 << COM01); // FastPWM 
+	TCCR0 = (1 << CS01)|(1 << CS00); // предделитель
+
 	}
 
 int pwm_proc(int p) //Проценты в число
@@ -21,7 +22,7 @@ int main(void)
 {
 	init_PWM();
 
-	
+
 	while (1)
 	{
 		

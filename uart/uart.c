@@ -1,6 +1,7 @@
 #include "uart.h"
 
-
+volatile uint8_t received_byte = 0;
+volatile uint8_t data_ready = 0;
 
 void USART_init(uint16_t speed)
 	{
@@ -8,27 +9,24 @@ void USART_init(uint16_t speed)
 	UBRRH =(speed>>8);	
 	UBRRL = speed;
 
-	UCSRB = (1<<RXEN)|(1<<TXEN)|(1<<RXCIE); //RXCIE - innterr
+	UCSRB = (1<<RXEN)|(1<<TXEN)|(1<<RXCIE); //RXCIE - interrupt
 	UCSRA = (1<<U2X); // x2 (9600 -> 103 -> 8 MHz)
 	UCSRC = (1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0); //assync /8 bit 
 	}
 
-void USART_TX(unsigned char data)
+void USART_TX(uint8_t data)
 	{
-		while (!(UCSRA&(1<<UDRE))); //проверяем UDRE бит что он 0 - это готовность к записи
-		
-		UDR = data; // sendc data
+	
+	while (!(UCSRA&(1<<UDRE))); //проверяем UDRE бит что он 0 - это готовность к записи	
+	UDR = data; // send data
 
 	}
 
 
-volatile uint8_t received_byte = 0;
-volatile uint8_t data_ready = 0;
-
-	ISR(USART_RXC_vect) 
+ISR(USART_RXC_vect) 
 	{
 		received_byte = UDR;  // сохраняем байт в глобальную переменную
-		data_ready = 1;
+		data_ready = 1; //flag
 	}
 
 void USART_echo()
@@ -47,19 +45,20 @@ void USART_ptr_str(char *str) // TX string
 		}
 
 	}
-
-void USART_get_str(char *str) // 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+void USART_get_str() // 
 	{
-		while (*str) 
+		while (data_ready == 1) 
 		{
 
-		USART_TX(*str++); //
+		received_byte //
 		
 		}
 
 	}
 
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
 int main(void)
 {
 	
@@ -70,14 +69,14 @@ int main(void)
 	USART_TX('O');
 	USART_TX('N');
 
-	unsigned char mystr[] = {"Hello"};
+	uint8_t mystr[] = {"Hello"};
 	USART_ptr_str(mystr);
 
-	unsigned char str_get[] = {"GET:"};
+	uint8_t str_get[] = {"GET:"};
 
     while(1)
     {
-4545
+
 		if (data_ready)
 		{
 
