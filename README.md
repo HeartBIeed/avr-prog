@@ -1,3 +1,5 @@
 Мои учебные работы на микроконтроллерах AVR
-по статьям с сайта 
+по статьям с сайтов:
 https://narodstream.ru/programmirovanie-mk-avr
+https://microsin.net/programming/avr/index.html
+http://easyelectronics.ru/category/avr-uchebnyj-kurs
