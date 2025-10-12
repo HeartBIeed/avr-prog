@@ -7,5 +7,5 @@ https://microsin.net/programming/avr/index.html
 
 http://easyelectronics.ru/category/avr-uchebnyj-kurs 
 
-![atmega16](/16.png)
-![atmega32](/32.png)
+![atmega16](/16.PNG)
+![atmega32](/32.PNG)
