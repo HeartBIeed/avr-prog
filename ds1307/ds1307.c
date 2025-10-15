@@ -76,15 +76,15 @@ int main()
 
 	i2c_init();
 	
-	
+	/*
 i2c_start(); // настройка времени
 i2c_send(0b11010000); // адрес 0x68 + 0 - бит отправки
 i2c_send(0);
 i2c_send(DecToBSD(0)); //секунды
-i2c_send(DecToBSD(27)); //минуты
-i2c_send(DecToBSD(23)); //часы
+i2c_send(DecToBSD(05)); //минуты
+i2c_send(DecToBSD(22)); //часы
 i2c_stop();
-
+*/
 	
 	LCD_ini_1602();
 	setpos(0,0);

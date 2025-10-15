@@ -1,6 +1,6 @@
 MCU     = atmega32
 F_CPU   = 1000000UL
-TARGET  = ssd1307
+TARGET  = ssd1306
 
 CC      = avr-gcc
 OBJCOPY = avr-objcopy
