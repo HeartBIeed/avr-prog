@@ -1,35 +1,43 @@
-#ifndef ADC_H_
-#define ADC_H_
+#include "adc.h"
 
-#define F_CPU 8000000UL
+uint16_t adc_value =0;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
+void ADC_init(void)
+{
+// управляющ регистр
+ADCSRA |= (1<<ADEN);//adc on
+ADCSRA |= (1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);//Делитель 128 = 64 кГц
 
+// управления каналами мультиплексора АЦП
+ADMUX |= (1<<REFS1)|(1<<REFS0); //Внутренний Источник ОН 2,56в
+//ADMUX |= 0x01; //каналы 
 
-#endif /* ADC_H_ */
+}
 
+void ADC_interrupt(void)
+{
+ADCSRA |= (1<<ADSC); //при установке в 1  АЦП начинать преобразование.
+ADCSRA |= (1<<ADATE)|(1<<ADIE);//непрерыв режим и вкл прерыв
+sei();
+}
 
+uint16_t ADC_convert(void)
+{
+
+ADCSRA |= (1<<ADSC); 
+while ((ADCSRA & (1<<ADSC))); // wait end
+return (uint8_t)ADC;
+}
+
+ISR(ADC_vect)
+{
+adc_value = ADC;
+}
 
 int main(void)
 {
 
-DDRB |= (1<<PB2)|(1<<PB3)|(1<<PB5); // spi pin out
-PORTB &= ~((1<<PB2)|(1<<PB3)|(1<<PB5)); // in low
-
-
-PORTB |=  (1<<PB2); // ss up	
-PORTB &= ~(1<<PB2);	// ss down	
-
+adc_value = ADC_convert();
 	
 }
 
-
-
-/*
-
-
-*/

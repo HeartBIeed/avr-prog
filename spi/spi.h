@@ -1,5 +1,5 @@
-#ifndef DS1307_H_
-#define DS1307_H_
+#ifndef MAIN_H_
+#define MAIN_H_
 
 #define F_CPU 8000000UL
 
@@ -9,9 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "lcd1602.h"
+#define CS_UP PORTB|=(1<<PB2);
+#define CS_DOWN PORTB &=~(1<<PB2);	
 
-void set_time(uint32_t h,uint32_t m);
-void time_to_lcd();
-
-#endif /* DS1307_H_ */
+#endif /* MAIN_H_ */

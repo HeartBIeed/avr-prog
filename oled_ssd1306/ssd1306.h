@@ -1,5 +1,5 @@
-#ifndef SSD1307_H_
-#define SSD1307_H_
+#ifndef SSD1306_H_
+#define SSD1306_H_
 
 #define F_CPU 1000000UL
 
@@ -11,4 +11,4 @@
 
 #include "i2c.h"
 
-#endif /* I2C_H_ */
+#endif /* SSD1306_H_ */

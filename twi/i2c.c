@@ -3,7 +3,7 @@
 
 void i2c_init(void)
 	{
-		TWBR = 0x20; //десятичное  32- частота 10 kHz при тактировании 8 MHz
+		TWBR = 0x20; //десятичное 32-частота 10 kHz при тактировании 8 MHz
 	}
 
 void i2c_start(void) // старт i2c
@@ -12,7 +12,7 @@ void i2c_start(void) // старт i2c
 		while(!(TWCR&(1<<TWINT))); // ждем TWINT в 0 - задание оконченно/ пока 1 - работа
 	}
 
-void i2c_stop(void) // stop i2c
+void i2c_stop(void) // стоп i2c
 	{
 		TWCR =(1<<TWINT)|(1<<TWSTO)|(1<<TWEN); // 1 = TWSTO -> стоп 
 	}
@@ -39,7 +39,7 @@ uint8_t i2c_read_byte(void) // чтение
 		return TWDR;
 	}
 
-uint8_t i2c_read_byte_NACK(void) // чтение последнего байт
+uint8_t i2c_read_byte_NACK(void) // чтение последнего байта
 	{
 		TWCR=(1<<TWINT)|(1<<TWEN); // без АСК
 		while(!(TWCR&(1<<TWINT))); 

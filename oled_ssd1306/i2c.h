@@ -1,7 +1,7 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-#include "ssd1307.h"
+#include "ssd1306.h"
 
 void i2c_init(void);
 void i2c_start(void);

@@ -17,11 +17,10 @@ int pwm_proc(int p) //Проценты в число
 		return	result;
 	}
 
-/*
+
 int main(void)
 {
 	init_PWM();
-
 
 	while (1)
 	{
@@ -32,4 +31,3 @@ int main(void)
 	
 }
 
-*/
