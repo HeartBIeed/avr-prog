@@ -1,5 +1,5 @@
 MCU     = atmega32
-F_CPU   = 1000000UL
+F_CPU   = 8000000UL
 TARGET  = ssd1306
 
 CC      = avr-gcc

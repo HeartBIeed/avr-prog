@@ -59,12 +59,15 @@ static void ssd1306_fill(uint8_t b)
 
 int main()
 {
+    _delay_ms(1000);
+
     i2c_init();
 
-    _delay_ms(10);
+    _delay_ms(100);
 
     ssd1306_begin();
 
+    _delay_ms(100);
 
 
 while(1){
