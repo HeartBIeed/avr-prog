@@ -112,7 +112,7 @@ int main()
 	i2c_init();		
 	LCD_ini_1602();
 	setpos(0,0);
-//	set_time(23,15)	
+	set_time(22,02);
 
 while(1)
 	{
