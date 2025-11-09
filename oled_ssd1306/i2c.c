@@ -19,7 +19,7 @@ void i2c_stop(void) // stop i2c
 
 void i2c_send_adress(uint8_t adress) 
 	{
-		TWDR = (adress<<1)|0x01;
+		TWDR = (adress<<1);
 		TWCR=(1<<TWINT)|(1<<TWEN); 
 		while(!(TWCR&(1<<TWINT))); 
 	}
