@@ -1,5 +1,5 @@
-#ifndef I2C_H_
-#define I2C_H_
+#ifndef AHT20_H_
+#define AHT20_H_
 
 #define F_CPU 8000000UL
 
@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "uart.h"
+#include "i2c.h"
 
 
-#endif /* I2C_H_ */
+
+#endif /* AHT20_H_ */
