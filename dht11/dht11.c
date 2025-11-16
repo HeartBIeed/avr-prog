@@ -6,15 +6,19 @@ void dht_request() //start down-up
 		PORTD&=~(1<<DHT_PIN);
 		_delay_us(20);			
 		PORTD|= (1<<DHT_PIN);
+		USART_send_str("request \r\n"); 
 
 	}
 
 void dht_response(void) //ответ - ждем up-down-up
 	{
+		USART_send_str("start response \r\n"); 
+
 		DDRD&=~(1<<DHT_PIN);
 		while (PIND &(1<<DHT_PIN)); // ожидание 1
 		while ((PIND &(1<<DHT_PIN))==0); // ожидание 0
 		while (PIND &(1<<DHT_PIN));
+		USART_send_str("response \r\n"); 
 
 	}
 
@@ -40,6 +44,7 @@ uint8_t dht_receive_data() //получаем байт
 			}
 
 		}
+		USART_send_str("receive \r\n"); 
 
 	return c;
 	}
@@ -69,10 +74,19 @@ void dht_write_data(char* data)
 
 int main(void)
 {
+	USART_init(103);
+	char data[16];
+	USART_send_str("ENABLE \r\n"); 
 
-	uint8_t data[16];
+while (1)
+{
+	_delay_ms(3000);
 	dht_write_data(data);
-	
+	USART_send_str(data); 
+	USART_send_str("uart \r\n"); 
+}
+
+
 }
 
 //	sprintf(data, "RH:%d.%d % T:%d.%dC", I_RH, D_RH, I_TEMP, D_TEMP);

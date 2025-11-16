@@ -1,20 +1,22 @@
 MCU     = atmega32
 F_CPU   = 8000000UL
-TARGET  = dht11
+TARGET  = main
 
 CC      = avr-gcc
 OBJCOPY = avr-objcopy
+AVRDUDE = avrdude
 
+SRC_DIR = src
+INC_DIR = inc
 
-SRC     = $(wildcard *.c)
-HEADERS = $(wildcard inc/*.h)
+SRC     = $(wildcard $(SRC_DIR)/*.c)
 OBJ     = $(SRC:.c=.o)
 
-CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Iinc
+CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -I$(INC_DIR)
 
 all: $(TARGET).hex
 
-%.o: %.c $(HEADERS)
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET).elf: $(OBJ)
@@ -23,3 +25,5 @@ $(TARGET).elf: $(OBJ)
 $(TARGET).hex: $(TARGET).elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
+clean:
+	rm -f $(SRC_DIR)\*.o $(TARGET).elf 

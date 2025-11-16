@@ -5,11 +5,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-#define DHT_PIN 6
+#include "uart.h"
+
+#define DHT_PIN 4
 
 #endif /* DHT11_H_ */
