@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "lcd1602.h"
+#include "i2c.h"
 
 void set_time(uint32_t h,uint32_t m);
 void time_to_lcd();

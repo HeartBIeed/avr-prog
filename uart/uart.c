@@ -18,7 +18,7 @@ void USART_init(uint16_t speed)
 void USART_TX(uint8_t data)
 	{
 	
-	while (!(UCSRA&(1<<UDRE))); //проверяем UDRE бит что он 0 - это готовность к записи	
+	while (!(UCSRA & (1<<UDRE))); //проверяем UDRE бит что он 0 - это готовность к записи	
 	UDR = data; // send data
 
 	}
@@ -69,12 +69,12 @@ int main(void)
     {
 		if (data_ready)
 		{
-			if (strncmp((char*)data_buffer,"ping",4) == 0) //4 первых символа стравниваем
+			if (strncmp((char*)data_buffer,"ping",4) == 0) //4 первых символа сравниваем
 			{
 				USART_send_str("pong!!!\r\n");
 			}
 
-			if (strncmp((char*)data_buffer,"cmd",3) == 0) //4 первых символа стравниваем
+			if (strncmp((char*)data_buffer,"cmd",3) == 0) //4 первых символа сравниваем
 			{
 				USART_send_str("command\r\n");
 			}
