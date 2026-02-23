@@ -1,5 +1,4 @@
 #include "main.h"
-#include "lcd1602.h"
 
 void user_symbols()
 {
@@ -59,7 +58,7 @@ const uint8_t d[8] = {
 for (uint8_t n = 0; n < 4; n++)
     {
         set_lcd_pos(n,1);
-        send_byte(n,1);
+        send_lcd_char(n);
     }
 
 }
@@ -69,15 +68,15 @@ int main(void)
 {
 	LCD1602_ini();
 	
-	set_lcd_pos(0,0);
-	send_lcd_ptr_str("HELLO");
-	user_symbols();
+    set_lcd_pos(5,0);
+    send_lcd_string("HELLO 2");
 
+    set_lcd_pos(0,1);
+    user_symbols();
 
 while(1)
 	{
-	
-		
 
+ 
 	}
 }

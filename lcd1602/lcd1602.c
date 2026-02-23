@@ -4,8 +4,8 @@
 void LCD1602_ini(void)
 	{
 
-		SETPORT
-		MODEPORT
+		SETPORT;
+		MODEPORT;
 		
 			_delay_ms(15);
 		send_nibble(0x3);  // 0b00000011 включает 4 битный режим
@@ -34,13 +34,13 @@ void send_nibble(uint8_t byte) // отправка полубайта
 		
 		byte<<=4; // сдвигаем байт младшей тетрадой к старшей
 
-		E1
+		E1;
 		_delay_us(50);
 
 		PORTA &= 0xF; // отчистка старшей тетрады порта
 		PORTA |=byte; 
 
-		E0
+		E0;
 		_delay_us(50);
 			
 	}
@@ -48,8 +48,8 @@ void send_nibble(uint8_t byte) // отправка полубайта
 void send_byte(uint8_t c,uint8_t mode)
 	{
 
-		if (mode ==0) {RS0} // команда 0
-		else {RS1}// данные 1
+		if (mode ==0) RS0; // команда 0
+		else RS1;// данные 1
 		
 		uint8_t hc=0;
 		hc = c >> 4;
@@ -61,39 +61,33 @@ void send_byte(uint8_t c,uint8_t mode)
 void send_lcd_char(uint8_t c) // отправка 1 символа
 	{
 		send_byte(c,1);
-			_delay_ms(10);
 	}
 
 void set_lcd_pos(uint8_t x, uint8_t y) // установка позиции Х 0-15, У 0-1.
 	{
-		uint8_t adress;
+		uint8_t address;
 
-		adress=(0x40*y+x)|0b10000000; // адреса символов 2ой строки идут от 40, 8й бит передает команду установки позиции
+		address=(0x40*y+x)|0b10000000; // адреса символов 2ой строки идут от 40, 8й бит передает команду установки позиции
 
-		send_byte(adress, 0);
+		send_byte(address, 0);
 
 	}
 
 
-void send_lcd_ptr_str(uint8_t *str) // отправка строки по указателю массива
+void send_lcd_string(uint8_t *str) // отправка строки по указателю массива
 	{
-		while (*str) {
-
-		send_lcd_char(*str++); //посимвольная передача до нуля
-		
-		}
-
+		while (*str) send_lcd_char(*str++); //посимвольная передача до нуля
 	}
 
 
 void create_symb(uint8_t index_symb, const uint8_t *data) 
 	{
-		uint8_t adress;
+		uint8_t address;
 		uint8_t i;
 
-		adress=0x40|(index_symb << 3); //<< 3 = умножить на 8.
+		address=0x40|(index_symb << 3); //<< 3 = умножить на 8.
 
-		send_byte(adress, 0);
+		send_byte(address, 0);
 
 		for (i = 0; i < 8; i++)
 			{
