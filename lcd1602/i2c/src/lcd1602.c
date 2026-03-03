@@ -6,7 +6,8 @@ void LCD1602_ini(void)
 		i2c_start();
 		i2c_send_adress(ADDR_LCD); 
 
-		
+		i2c_send(0x00);
+
 			_delay_ms(15);
 		send_nibble(0x3,0);  // 0b00000011 включает 4 битный режим
 			_delay_ms(4);
@@ -60,7 +61,7 @@ void send_byte(uint8_t c,uint8_t mode)
 void send_lcd_char(uint8_t c) // отправка 1 символа
 	{
 		send_byte(c,1);
-			_delay_ms(10);
+		_delay_us(50);
 
 	}
 
