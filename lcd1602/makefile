@@ -1,4 +1,4 @@
-MCU     = atmega32
+MCU     = atmega16
 F_CPU   = 8000000UL
 TARGET  = main
 
